@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MedExpert 儀表板</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#d0fbff",
+                    "tertiary-fixed-dim": "#ffb59c",
+                    "on-secondary-container": "#3d6a7a",
+                    "surface-tint": "#006970",
+                    "on-secondary-fixed": "#001f28",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dbdad6",
+                    "on-background": "#1b1c1a",
+                    "primary": "#006067",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#7ad5dd",
+                    "inverse-surface": "#2f312e",
+                    "secondary-container": "#bbeafc",
+                    "on-surface": "#1b1c1a",
+                    "on-primary-fixed": "#002022",
+                    "outline": "#6e797a",
+                    "surface-bright": "#faf9f5",
+                    "on-tertiary-container": "#fff0ec",
+                    "secondary": "#376474",
+                    "outline-variant": "#bdc9ca",
+                    "surface": "#faf9f5",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#390c00",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#96f1fa",
+                    "secondary-fixed-dim": "#a0cedf",
+                    "inverse-primary": "#7ad5dd",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f2f1ed",
+                    "surface-container-high": "#e9e8e4",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#3e494a",
+                    "surface-container": "#efeeea",
+                    "surface-container-low": "#f4f4f0",
+                    "tertiary-fixed": "#ffdbd0",
+                    "surface-container-highest": "#e3e2df",
+                    "surface-variant": "#e3e2df",
+                    "primary-container": "#007b83",
+                    "tertiary": "#85452e",
+                    "tertiary-container": "#a35c44",
+                    "on-primary-fixed-variant": "#004f54",
+                    "on-secondary-fixed-variant": "#1c4c5b",
+                    "on-tertiary-fixed-variant": "#723520",
+                    "secondary-fixed": "#bbeafc",
+                    "background": "#faf9f5",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["'Microsoft JhengHei'", "Lexend", "sans-serif"],
+                    "body": ["'Microsoft JhengHei'", "Inter", "sans-serif"],
+                    "label": ["'Microsoft JhengHei'", "Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-fixed-dim selection:text-on-primary-fixed min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-[#faf9f5]/80 dark:bg-[#1b1c1a]/80 backdrop-blur-xl docked full-width top-0 z-50 flex justify-between items-center px-6 py-4 w-full sticky top-0">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#006067] dark:text-[#007b83]" data-icon="clinical_notes">clinical_notes</span>
+<span class="text-[#006067] dark:text-[#007b83] font-headline font-extrabold text-xl">MedExpert</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6 font-headline tracking-tight text-lg font-bold">
+<a class="text-[#006067] dark:text-[#007b83]" href="#">首頁</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:bg-[#efeeea] dark:hover:bg-[#2a2b29] transition-colors px-3 py-1 rounded-lg" href="#">搜尋</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:bg-[#efeeea] dark:hover:bg-[#2a2b29] transition-colors px-3 py-1 rounded-lg" href="#">收藏夾</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:bg-[#efeeea] dark:hover:bg-[#2a2b29] transition-colors px-3 py-1 rounded-lg" href="#">設定</a>
+</nav>
+</div>
+<div class="w-10 h-10 rounded-full bg-secondary-container overflow-hidden ring-2 ring-primary/10">
+<img alt="用戶頭像" class="w-full h-full object-cover" data-alt="professional portrait of a medical student in a light filled library setting with warm skin tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3HNJMobOB6vQjaoZdHBjv1CL_qjBrVWmfOhUeJYwmUh7_rbrez72D67mPvEKxyRU400ndbD4AaiUQrWvQX2i0ewIjhO8n9RadRKgOZQpz7Ljz-w3xjr6oMHOUMhZOc4fDPTjmuMSUK99uu-9fSkeRlRBGBj7Zrqnd8nECdEI8gCNMaC0Uw0O4z05UosXwEI1gZb31kCa7XmfqZExmzj1Pp-9BB4xguVhyog8GUJVQnJhj0jYAs4cREBj7BSVVGqcDTnIgSFlmtz4"/>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-8 pb-32">
+<!-- Greeting Section -->
+<section class="mb-12 relative overflow-hidden rounded-[2.5rem] bg-surface-container-low p-8 md:p-12">
+<div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-primary-fixed/20 rounded-full blur-[80px]"></div>
+<div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-tertiary-fixed/20 rounded-full blur-[80px]"></div>
+<div class="relative z-10 flex flex-col gap-6">
+<div>
+<h1 class="font-headline text-4xl md:text-6xl font-extrabold tracking-tight text-on-surface mb-2">您好，用戶！</h1>
+<p class="font-body text-xl text-on-surface-variant max-w-2xl leading-relaxed">選擇一個類別開始學習。您的醫學精通之旅從單個模組開始。</p>
+</div>
+<!-- Search Bar -->
+<div class="max-w-2xl w-full">
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="search">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest border-none rounded-2xl py-5 pl-14 pr-6 text-on-surface shadow-[0_4px_20px_rgba(0,0,0,0.03)] focus:ring-2 focus:ring-primary/20 placeholder:text-outline-variant font-medium text-lg transition-all" placeholder="快速查找健康主題..." type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Category Tile: Brain & Nerves -->
+<button class="group relative flex flex-col items-start text-left bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.08)] active:scale-95 transition-all duration-300 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-2xl bg-primary-container/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="psychology">psychology</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">大腦與神經</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">記憶與專注：探索中樞神經系統的複雜性。</p>
+<div class="mt-6 flex items-center text-primary font-semibold text-sm gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    開始學習 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Category Tile: Eyes -->
+<button class="group relative flex flex-col items-start text-left bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.08)] active:scale-95 transition-all duration-300 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="visibility">visibility</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">眼睛</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">視力與護理：深入了解眼科健康與常見病理。</p>
+<div class="mt-6 flex items-center text-primary font-semibold text-sm gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    開始學習 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Category Tile: Immunity -->
+<button class="group relative flex flex-col items-start text-left bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(163,92,68,0.08)] active:scale-95 transition-all duration-300 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-2xl bg-tertiary-container/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="shield">shield</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">免疫力</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">身體的防禦：深入研究淋巴細胞與免疫反應。</p>
+<div class="mt-6 flex items-center text-primary font-semibold text-sm gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    開始學習 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Category Tile: Metabolism -->
+<button class="group relative flex flex-col items-start text-left bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.08)] active:scale-95 transition-all duration-300 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-2xl bg-primary-container/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="vital_signs">vital_signs</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">新陳代謝</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">能量與平衡：營養轉化的生物過程。</p>
+<div class="mt-6 flex items-center text-primary font-semibold text-sm gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    開始學習 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Category Tile: Diabetes -->
+<button class="group relative flex flex-col items-start text-left bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(163,92,68,0.08)] active:scale-95 transition-all duration-300 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-2xl bg-tertiary-container/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="bloodtype">bloodtype</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">糖尿病</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">血糖管理：控制葡萄糖水平與胰島素健康。</p>
+<div class="mt-6 flex items-center text-primary font-semibold text-sm gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    開始學習 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+<!-- Category Tile: Cardiovascular -->
+<button class="group relative flex flex-col items-start text-left bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.08)] active:scale-95 transition-all duration-300 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="favorite">favorite</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">心血管系統</h3>
+<p class="font-body text-on-surface-variant leading-relaxed">心臟健康：血管與循環系統的運作機制。</p>
+<div class="mt-6 flex items-center text-primary font-semibold text-sm gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    開始學習 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</button>
+</section>
+<!-- Signature Component: Learning Orb (Engagement) -->
+<section class="mt-16 flex flex-col md:flex-row items-center gap-8 bg-surface-container p-8 rounded-[2.5rem] border border-outline-variant/10">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<div class="absolute inset-0 bg-tertiary-container blur-[40px] opacity-20 rounded-full"></div>
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-secondary" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502.4" stroke-dashoffset="125.6" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="font-headline text-4xl font-extrabold text-on-surface">75%</span>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold">學習進度</span>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h4 class="font-headline text-2xl font-bold text-on-surface mb-2">本週目標已達成！</h4>
+<p class="font-body text-on-surface-variant max-w-lg mb-6">您本週已精通 12 個主題。今天繼續完成「大腦與神經」模組以保持您的學習紀錄。</p>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-headline font-bold text-lg hover:shadow-lg transition-all active:scale-95">
+                    繼續學習
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#faf9f5]/90 dark:bg-[#1b1c1a]/90 backdrop-blur-2xl rounded-t-[2rem] shadow-[0_-8px_32px_rgba(27,28,26,0.04)] border-t border-[#bdc9ca]/15">
+<a class="flex flex-col items-center justify-center bg-[#007b83]/10 dark:bg-[#007b83]/20 text-[#006067] dark:text-[#007b83] rounded-2xl px-5 py-2 tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-headline text-[10px] font-medium tracking-wide">首頁</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1c1a]/50 dark:text-[#faf9f5]/50 px-5 py-2 hover:text-[#006067] dark:hover:text-[#007b83] tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-headline text-[10px] font-medium tracking-wide">搜尋</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1c1a]/50 dark:text-[#faf9f5]/50 px-5 py-2 hover:text-[#006067] dark:hover:text-[#007b83] tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-headline text-[10px] font-medium tracking-wide">收藏夾</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1c1a]/50 dark:text-[#faf9f5]/50 px-5 py-2 hover:text-[#006067] dark:hover:text-[#007b83] tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-headline text-[10px] font-medium tracking-wide">設定</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-28 right-6 md:bottom-12 md:right-12 w-16 h-16 rounded-[1.5rem] bg-gradient-to-tr from-primary to-primary-container text-on-primary shadow-2xl flex items-center justify-center group active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform" data-icon="add_notes">add_notes</span>
+<!-- Tooltip (Simulated) -->
+<span class="absolute right-full mr-4 bg-on-surface text-surface text-xs font-bold py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">快速筆記</span>
+</button>
+</body></html>

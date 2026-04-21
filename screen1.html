@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#d0fbff",
+                      "tertiary-fixed-dim": "#ffb59c",
+                      "on-secondary-container": "#3d6a7a",
+                      "surface-tint": "#006970",
+                      "on-secondary-fixed": "#001f28",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dbdad6",
+                      "on-background": "#1b1c1a",
+                      "primary": "#006067",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#7ad5dd",
+                      "inverse-surface": "#2f312e",
+                      "secondary-container": "#bbeafc",
+                      "on-surface": "#1b1c1a",
+                      "on-primary-fixed": "#002022",
+                      "outline": "#6e797a",
+                      "surface-bright": "#faf9f5",
+                      "on-tertiary-container": "#fff0ec",
+                      "secondary": "#376474",
+                      "outline-variant": "#bdc9ca",
+                      "surface": "#faf9f5",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#390c00",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#96f1fa",
+                      "secondary-fixed-dim": "#a0cedf",
+                      "inverse-primary": "#7ad5dd",
+                      "on-error-container": "#93000a",
+                      "inverse-on-surface": "#f2f1ed",
+                      "surface-container-high": "#e9e8e4",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#3e494a",
+                      "surface-container": "#efeeea",
+                      "surface-container-low": "#f4f4f0",
+                      "tertiary-fixed": "#ffdbd0",
+                      "surface-container-highest": "#e3e2df",
+                      "surface-variant": "#e3e2df",
+                      "primary-container": "#007b83",
+                      "tertiary": "#85452e",
+                      "tertiary-container": "#a35c44",
+                      "on-primary-fixed-variant": "#004f54",
+                      "on-secondary-fixed-variant": "#1c4c5b",
+                      "on-tertiary-fixed-variant": "#723520",
+                      "secondary-fixed": "#bbeafc",
+                      "background": "#faf9f5",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["'Microsoft JhengHei'", "Lexend", "sans-serif"],
+                      "body": ["'Microsoft JhengHei'", "Inter", "sans-serif"],
+                      "label": ["'Microsoft JhengHei'", "Inter", "sans-serif"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .learning-orb-bg {
+            background: radial-gradient(circle, rgba(163,92,68,0.15) 0%, rgba(250,249,245,0) 70%);
+        }
+        body {
+            font-family: 'Microsoft JhengHei', 'Inter', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen selection:bg-primary/20">
+<!-- TopAppBar -->
+<header class="bg-[#faf9f5]/80 dark:bg-[#1b1c1a]/80 backdrop-blur-xl flex justify-between items-center px-6 py-4 w-full sticky top-0 docked full-width z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#006067] dark:text-[#007b83] text-2xl" data-icon="clinical_notes">clinical_notes</span>
+<span class="text-[#006067] dark:text-[#007b83] font-lexend font-extrabold text-xl">MedExpert</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="text-[#006067] dark:text-[#007b83] font-lexend tracking-tight text-lg font-bold" href="#">首頁</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 font-lexend tracking-tight text-lg font-bold hover:bg-[#efeeea] dark:hover:bg-[#2a2b29] transition-colors rounded-lg px-2" href="#">課程庫</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 font-lexend tracking-tight text-lg font-bold hover:bg-[#efeeea] dark:hover:bg-[#2a2b29] transition-colors rounded-lg px-2" href="#">專家團隊</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-primary/10">
+<img alt="用戶個人資料" class="w-full h-full object-cover" data-alt="minimalist user avatar icon on a clean neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASaaGwgoEp1KjyO8f7NrS5bmF1ny6jfaAF4zx5e6zAFQquhQf6WVGnj8tsPQb0ra_gKyPB-aGA7JgrdXXiQ6eX9MTyju0YXx7haSMHyslSWNqVeWsdnvfnKL2VsAqBbPD57Qu4iWIMedXAcYli1DBudLRTc_kkVSGMNyYrrpgQ9zRPdleg9GXQMuHRVqaP42QOSWIonNY8cMVgCYOwfNbcQHFEwwho0TDD6hisd02sxKz9rQ7rxnYfZSPzClNvc3P-uNBabEoGlak"/>
+</div>
+</div>
+<!-- Mobile Menu Placeholder -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative overflow-hidden px-6 pt-12 pb-24 md:pt-20 md:pb-32 max-w-7xl mx-auto">
+<div class="learning-orb-bg absolute -top-24 -right-24 w-96 h-96 rounded-full pointer-events-none"></div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<!-- Text Content -->
+<div class="md:col-span-7 z-10">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant text-sm font-semibold mb-6">
+<span class="material-symbols-outlined text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        實證醫學學習
+                    </div>
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold text-on-surface tracking-tight leading-[1.1] mb-6">
+                        專業醫學<span class="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-container">知識</span>，<br/>
+                        開啟更健康的生活。
+                    </h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-xl leading-relaxed mb-10">
+                        由專家精心策劃的準確健康資訊，觸手可及。立即加入我們的知識學習社群。
+                    </p>
+<!-- CTA Actions -->
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex items-center justify-center gap-3 bg-[#06C755] hover:bg-[#05b34c] text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-[#06C755]/20 active:scale-95 transition-all">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+<path d="M24 10.304c0-5.369-5.383-9.738-12-9.738s-12 4.369-12 9.738c0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.047c-.052.312-.252 1.22 1.085.665 1.336-.554 7.203-4.241 9.828-7.267 1.83-2.001 2.126-3.834 2.126-5.73z"></path>
+</svg>
+                            使用 LINE 登入
+                        </button>
+<button class="flex items-center justify-center bg-surface-container-highest text-on-secondary-container px-8 py-4 rounded-full font-bold text-lg hover:bg-surface-container-high active:scale-95 transition-all">
+                            以訪客身份探索
+                        </button>
+</div>
+</div>
+<!-- Hero Image -->
+<div class="md:col-span-5 relative">
+<div class="aspect-square w-full rounded-3xl overflow-hidden shadow-2xl relative z-10 bg-surface-container">
+<img alt="醫護專業人員" class="w-full h-full object-cover" data-alt="stylized digital painting of a friendly young female doctor with a stethoscope smiling warmly, soft teal and peach color palette, cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGhR2-94aaf5tPnAc97CmWlOsGKSK6S1NPiYkZo6qh22FLCszbWeBG5ZibsGCJuWysDt2H0KutBNuZINbzch_mYawtMopeNCvh0Au-Q4megc4SLVNeod5Szylc8DMQ3qr465yFnoCB19tJgKalRMHAzrvWKucKku_Ih47ZDrjLQuLha6z2yS3EpMzkkmA48PGWpfW9iHp4LBnmE1-7J3flP45L6Q_0kG2CnHnvWmElR98Xa4FH6cv4MM7VYTZGMfSmFGgv9oFuqSE"/>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute -bottom-6 -left-6 w-32 h-32 bg-tertiary/10 rounded-2xl blur-2xl z-0"></div>
+<div class="absolute top-10 -right-10 bg-surface-container-lowest p-4 rounded-2xl shadow-lg z-20 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">500+ 門課程</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">經過驗證的專家內容</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Indicators Section -->
+<section class="bg-surface-container-low py-16 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-12">
+<p class="text-on-surface-variant font-semibold tracking-widest uppercase text-sm">深受 50,000+ 名用戶信賴</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-60 grayscale hover:grayscale-0 transition-all">
+<span class="text-xl font-headline font-bold text-outline">HEALTH-CORP</span>
+<span class="text-xl font-headline font-bold text-outline">MED-U</span>
+<span class="text-xl font-headline font-bold text-outline">CARE-LINK</span>
+<span class="text-xl font-headline font-bold text-outline">BIOLABS</span>
+</div>
+</div>
+</section>
+<!-- Featured Grid (Bento Style) -->
+<section class="py-24 px-6 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[240px]">
+<!-- Large Feature Card -->
+<div class="md:col-span-8 md:row-span-2 bg-primary-container text-on-primary-container rounded-3xl p-10 flex flex-col justify-end relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl group-hover:bg-white/20 transition-all duration-700"></div>
+<span class="material-symbols-outlined text-5xl mb-6" data-icon="psychology">psychology</span>
+<h3 class="text-4xl font-headline font-bold mb-4">掌握臨床推理</h3>
+<p class="text-lg text-on-primary-container/80 max-w-md">我們的案例導向教學法能幫助您縮小醫學理論與現實臨床實踐之間的差距。</p>
+</div>
+<!-- Small Feature 1 -->
+<div class="md:col-span-4 bg-surface-container rounded-3xl p-8 flex flex-col justify-center">
+<div class="w-12 h-12 bg-tertiary-container rounded-xl flex items-center justify-center text-white mb-4">
+<span class="material-symbols-outlined" data-icon="update">update</span>
+</div>
+<h4 class="text-xl font-bold mb-2">每週更新</h4>
+<p class="text-on-surface-variant">掌握最新的醫學期刊動態與科學突破。</p>
+</div>
+<!-- Small Feature 2 -->
+<div class="md:col-span-4 bg-surface-container-highest rounded-3xl p-8 flex flex-col justify-center">
+<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-white mb-4">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<h4 class="text-xl font-bold mb-2">專家問答</h4>
+<p class="text-on-surface-variant">直接向業界領先的專科醫師諮詢您的疑問。</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/10 pt-16 pb-32 md:pb-16 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="clinical_notes">clinical_notes</span>
+<span class="text-primary font-lexend font-extrabold text-xl">MedExpert</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed">
+                        全球最受患者與醫療專業人士信賴的醫學教育平台。
+                    </p>
+</div>
+<div>
+<h5 class="font-bold mb-6">探索</h5>
+<ul class="space-y-4 text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">所有課程</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">專業認證</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">免費資源</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-6">公司資訊</h5>
+<ul class="space-y-4 text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">關於我們</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">專家團隊</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">聯絡我們</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-6">社群互動</h5>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-12 border-t border-outline-variant/20 text-center text-sm text-on-surface-variant/60">
+                © 2024 MedExpert 醫學教育。保留所有權利。專業與關懷的結合。
+            </div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#faf9f5]/90 dark:bg-[#1b1c1a]/90 backdrop-blur-2xl rounded-t-[2rem] shadow-[0_-8px_32px_rgba(27,28,26,0.04)]">
+<a class="flex flex-col items-center justify-center bg-[#007b83]/10 dark:bg-[#007b83]/20 text-[#006067] dark:text-[#007b83] rounded-2xl px-5 py-2 tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-lexend text-[10px] font-medium tracking-wide">首頁</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1c1a]/50 dark:text-[#faf9f5]/50 px-5 py-2 hover:text-[#006067] dark:hover:text-[#007b83] tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-lexend text-[10px] font-medium tracking-wide">搜尋</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1c1a]/50 dark:text-[#faf9f5]/50 px-5 py-2 hover:text-[#006067] dark:hover:text-[#007b83] tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-lexend text-[10px] font-medium tracking-wide">收藏</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1b1c1a]/50 dark:text-[#faf9f5]/50 px-5 py-2 hover:text-[#006067] dark:hover:text-[#007b83] tap-highlight-transparent active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-lexend text-[10px] font-medium tracking-wide">設定</span>
+</a>
+</nav>
+</body></html>
