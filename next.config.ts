@@ -1,20 +1,9 @@
-// @ts-nocheck
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    // 強制忽略編譯錯誤，這是我們目前最需要的
-    ignoreBuildErrors: true,
-  },
-  // 暫時移除 eslint 區塊，避免 Next.js 16 報錯導致中斷
-  // 我們改用環境變數來控制它
+  output: 'export', // 這是最重要的：強制 Next.js 產出 "out" 資料夾
   images: {
-    domains: ['profile.line-scdn.net'],
+    unoptimized: true, // 靜態匯出必須關閉圖片優化
   },
-  env: {
-    NEXT_PUBLIC_LIFF_ID: process.env.NEXT_PUBLIC_LIFF_ID,
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  }
 };
 
 export default nextConfig;

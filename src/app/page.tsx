@@ -1,121 +1,101 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import Image from 'next/image';
 
-export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const initLiff = async () => {
-      try {
-        if (typeof window === "undefined") return;
-
-        const liff = (await import("@line/liff")).default;
-        await liff.init({
-          liffId: process.env.NEXT_PUBLIC_LIFF_ID || "",
-        });
-        console.log("LIFF 成功啟動");
-
-        if (liff.isLoggedIn()) {
-          router.push('/categories');
-        }
-      } catch (error: any) {
-        console.error("LIFF 啟動失敗", error.message);
-      }
-    };
-    initLiff();
-  }, [router]);
-
-  const handleLineLogin = async () => {
-    try {
-      const liff = (await import("@line/liff")).default;
-      if (!liff.isLoggedIn()) {
-        liff.login({ redirectUri: window.location.origin + "/categories" });
-      } else {
-        router.push("/categories");
-      }
-    } catch (err) {
-      console.error("LINE login error:", err);
-    }
+export default function LandingPage() {
+  // 處理 LINE 登入邏輯
+  const handleLineLogin = () => {
+    // 這裡串接你的 LIFF login 邏輯
+    console.log("跳轉至 LINE 登入...");
   };
 
   return (
-    <div className="bg-[#faf9f5] font-body text-on-surface min-h-screen flex flex-col items-center">
-      {/* 頂部標誌欄 */}
-      <header className="w-full max-w-4xl flex justify-between items-center px-6 py-8">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-[#006067] text-3xl" data-icon="medical_services">
-            medical_services
-          </span>
-          <span className="text-[#006067] font-headline font-bold text-xl tracking-wider">
-            彥臣生技
-          </span>
+    <main className="min-h-screen bg-[#F9F8F6] text-[#1E293B] font-sans pb-12">
+
+      {/* 1. Header Area */}
+      <section className="px-8 pt-12 pb-8 flex flex-col items-center text-center">
+        <div className="bg-[#E2E8F0] text-[#475569] text-[10px] font-bold px-4 py-1.5 rounded-full flex items-center gap-2 mb-6 shadow-sm border border-white">
+          <span className="text-teal-600">✔</span> 基於研究證據
         </div>
-      </header>
 
-      <main className="w-full max-w-4xl px-6 flex flex-col items-center pb-32">
-        {/* 垂直置中的主視覺區域 */}
-        <section className="flex flex-col items-center w-full mt-4 md:mt-12 mb-24 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <h1 className="text-3xl font-black tracking-tight text-slate-800 mb-4">
+          彥臣專業衛教平台
+        </h1>
+        <p className="text-sm leading-relaxed text-slate-500 max-w-[280px]">
+          連接科學與健康的橋樑，為醫療專業人士員追求品質的您提供權威實證資訊。
+        </p>
 
-          <div className="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-full border border-[#006067]/20 bg-[#006067]/5 text-[#006067] text-sm font-bold mb-8 shadow-sm">
-            <span className="material-symbols-outlined text-[18px]">verified</span>
-            基於研究證據
-          </div>
-
-          <h1 className="font-headline text-5xl md:text-6xl font-extrabold text-[#1b1c1a] tracking-tight leading-[1.2] mb-6 text-center">
-            彥臣專業衛教平台
-          </h1>
-
-          <p className="text-xl text-[#1b1c1a]/70 max-w-2xl text-center leading-relaxed mb-12 font-medium">
-            連接科學與健康的橋樑，為醫療專業人士與追求品質的您提供權威實證資訊。
-          </p>
-
-          <button onClick={handleLineLogin} className="w-full sm:w-auto min-w-[320px] flex items-center justify-center gap-4 bg-[#006067] hover:bg-[#007b83] text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-[0_8px_32px_rgba(0,96,103,0.3)] active:scale-95 transition-all">
-            <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
-              <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738s-12 4.369-12 9.738c0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.047c-.052.312-.252 1.22 1.085.665 1.336-.554 7.203-4.241 9.828-7.267 1.83-2.001 2.126-3.834 2.126-5.73z"></path>
-            </svg>
-            使用 LINE 登入
+        {/* 2. LINE Login Button - 關鍵 CTA */}
+        <div className="w-full max-w-[320px] mt-10">
+          <button
+            onClick={handleLineLogin}
+            className="w-full bg-[#007F80] hover:bg-[#006666] active:scale-[0.98] transition-all text-white py-4 rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-teal-900/10"
+          >
+            <span className="text-xl">💬</span>
+            <span className="font-bold tracking-wide">使用 LINE 登入</span>
           </button>
-        </section>
+          <p className="text-[10px] text-slate-400 mt-4 font-medium">
+            立即登入解鎖完整專家諮詢權限與深度研究報告
+          </p>
+        </div>
+      </section>
 
-        {/* 垂直排列的大卡片區塊 */}
-        <section className="w-full flex flex-col gap-6 animate-in fade-in duration-1000 delay-300 fill-mode-both">
-          {/* 第一個：科學驗證的生技醫藥資訊 */}
-          <div className="bg-white border border-[#006067]/10 rounded-[2rem] p-8 md:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-8 shadow-[0_4px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.06)] transition-all">
-            <div className="w-20 h-20 rounded-2xl bg-[#006067]/10 flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[40px] text-[#006067]">science</span>
-            </div>
-            <div className="text-center sm:text-left flex-1">
-              <h3 className="text-2xl md:text-3xl font-headline font-bold text-[#1b1c1a] mb-4">科學驗證的生技醫藥資訊</h3>
-              <p className="text-[#1b1c1a]/70 font-body text-lg leading-relaxed">由專科醫師與生材專家詳盡解析專利成份與臨床效果，為您提供最精確的保健指南與醫學常識。</p>
+      {/* 3. Feature Cards - 依照設計圖實作 */}
+      <section className="px-6 space-y-6 mt-6">
+
+        {/* Card 1: 科學驗證 */}
+        <div className="bg-[#F3F4F1] rounded-[2.5rem] p-8 border border-white/50 shadow-sm group">
+          <div className="flex items-center gap-2 text-[#004D4D] mb-4">
+            <span className="text-lg">🧪</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.1em]">Scientific Validation</span>
+          </div>
+          <h2 className="text-xl font-black text-slate-800 mb-3">科學驗證的生技醫藥資訊</h2>
+          <p className="text-xs leading-relaxed text-slate-500 mb-6">
+            幫助您理解病理機轉與天然保健品的運用原理。深入淺出的學術解析，讓健康掌握在數據與實證之中。
+          </p>
+          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-200">
+            {/* 這裡之後放入燒瓶與量筒的設計圖 */}
+            <div className="w-full h-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center text-white italic">Image Placeholder</div>
+          </div>
+        </div>
+
+        {/* Card 2: 生技醫藥新知 */}
+        <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
+          <div className="flex items-center gap-2 text-[#475569] mb-4">
+            <span className="text-lg">📰</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.1em]">Latest Insights</span>
+          </div>
+          <h2 className="text-xl font-black text-slate-800 mb-3">生技醫藥新知</h2>
+          <p className="text-xs leading-relaxed text-slate-500 mb-6">
+            追蹤全球生技製藥最新動態與臨床研究成果，為您的專業知識庫提供即時更新。
+          </p>
+          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 flex items-center justify-center">
+            {/* 這裡放入心電圖與 SAFE WORK 的底圖 */}
+            <div className="w-full h-full bg-blue-900/20 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xs tracking-widest">PULSE ANIMATION</div>
+          </div>
+        </div>
+
+        {/* Card 3: 專家問答 */}
+        <div className="bg-[#F3F4F1] rounded-[2.5rem] p-8 border border-white/50 shadow-sm">
+          <div className="flex items-center gap-2 text-[#7A4B3A] mb-4">
+            <span className="text-lg">💬</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.1em]">Expert Consultation</span>
+          </div>
+          <h2 className="text-xl font-black text-slate-800 mb-3">專家問答</h2>
+          <p className="text-xs leading-relaxed text-slate-500 mb-6">
+            直接向業界領先的專家團隊諮詢您的疑問。不論是藥物機轉或健康規劃，我們提供最權威的解答。
+          </p>
+          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-[#1A222E] flex items-center justify-center text-center p-6">
+            <div>
+              <p className="text-cyan-400 font-bold tracking-widest text-lg mb-1">EXPERT</p>
+              <p className="text-white font-bold tracking-[0.3em] text-sm">WORK</p>
+              <div className="mt-4 text-cyan-400 text-3xl">☁️</div>
             </div>
           </div>
+        </div>
 
-          {/* 第二個：生技醫藥新知 */}
-          <div className="bg-white border border-[#006067]/10 rounded-[2rem] p-8 md:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-8 shadow-[0_4px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.06)] transition-all">
-            <div className="w-20 h-20 rounded-2xl bg-[#006067]/10 flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[40px] text-[#006067]">monitor_heart</span>
-            </div>
-            <div className="text-center sm:text-left flex-1">
-              <h3 className="text-2xl md:text-3xl font-headline font-bold text-[#1b1c1a] mb-4">生技醫藥新知</h3>
-              <p className="text-[#1b1c1a]/70 font-body text-lg leading-relaxed">匯集國內外最新論文與前沿醫療期刊，為醫療從業人員與重視健康的您輕鬆掌握科研突破。</p>
-            </div>
-          </div>
-
-          {/* 第三個：專家問答 */}
-          <div className="bg-white border border-[#006067]/10 rounded-[2rem] p-8 md:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-8 shadow-[0_4px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_40px_rgba(0,96,103,0.06)] transition-all">
-            <div className="w-20 h-20 rounded-2xl bg-[#006067]/10 flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[40px] text-[#006067]">forum</span>
-            </div>
-            <div className="text-center sm:text-left flex-1">
-              <h3 className="text-2xl md:text-3xl font-headline font-bold text-[#1b1c1a] mb-4">專家問答</h3>
-              <p className="text-[#1b1c1a]/70 font-body text-lg leading-relaxed">您可以直接與專業黃博士及其資深研發醫療顧問團隊進行諮詢，專業為您解除各項健康疑慮。</p>
-            </div>
-          </div>
-        </section>
-
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
