@@ -18,7 +18,27 @@ export default function LandingPage() {
 function LandingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  // --- 從這裡開始貼上 ---
+  useEffect(() => {
+    const autoLogin = async () => {
+      const code = searchParams.get('code');
+      if (code) {
+        localStorage.setItem('nbm_invitation_code', code);
+        try {
+          await liff.init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! });
+          if (liff.isLoggedIn()) {
+            router.push('/categories');
+          } else {
+            liff.login();
+          }
+        } catch (err) {
+          console.error("Auto init failed", err);
+        }
+      }
+    };
+    autoLogin();
+  }, [searchParams, router]);
+  // --- 貼到這裡結束 ---
   const handleLineLogin = async () => {
     try {
       // 請確保 NEXT_PUBLIC_LIFF_ID 已在 Cloudflare 環境變數中設定
