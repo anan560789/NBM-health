@@ -81,12 +81,12 @@ function LandingContent() {
 
         {/* 2. LINE Login Button */}
         <div className="w-full max-w-[320px] mt-10">
+          {/* 找到這段程式碼，並確保第一行有加上 onClick */}
           <button
             onClick={handleLineLogin}
-            className="w-full bg-[#007F80] hover:bg-[#006666] active:scale-[0.98] transition-all text-white py-4 rounded-2xl flex items-center justify-center gap-3 shadow-lg"
+            className="flex items-center gap-2 bg-[#437A7A] text-white px-12 py-4 rounded-3xl font-bold shadow-lg active:scale-95 transition-all"
           >
-            <span className="text-xl">💬</span>
-            <span className="font-bold tracking-wide">使用 LINE 登入</span>
+            <span className="text-xl">🗨️</span> 使用 LINE 登入
           </button>
           <p className="text-[10px] text-slate-400 mt-4 font-medium">
             立即登入解鎖完整專家諮詢權限與深度研究報告
