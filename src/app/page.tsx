@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 
 export default function LandingPage() {
@@ -54,9 +53,13 @@ export default function LandingPage() {
           <p className="text-xs leading-relaxed text-slate-500 mb-6">
             幫助您理解病理機轉與天然保健品的運用原理。深入淺出的學術解析，讓健康掌握在數據與實證之中。
           </p>
-          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-200">
-            {/* 這裡之後放入燒瓶與量筒的設計圖 */}
-            <div className="w-full h-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center text-white italic">Image Placeholder</div>
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-inner">
+            <Image
+              src="/scientific-lab-2.jpg"
+              alt="實驗室科學研究"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
 
@@ -70,9 +73,13 @@ export default function LandingPage() {
           <p className="text-xs leading-relaxed text-slate-500 mb-6">
             追蹤全球生技製藥最新動態與臨床研究成果，為您的專業知識庫提供即時更新。
           </p>
-          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 flex items-center justify-center">
-            {/* 這裡放入心電圖與 SAFE WORK 的底圖 */}
-            <div className="w-full h-full bg-blue-900/20 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xs tracking-widest">PULSE ANIMATION</div>
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-inner border border-slate-100">
+            <Image
+              src="/research-lab-dna.jpg"
+              alt="彥臣生技 DNA 與 Genetic Research 專業實驗室"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
 
