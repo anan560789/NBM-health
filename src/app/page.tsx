@@ -5,8 +5,6 @@ import { useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import liff from '@line/liff';
 
-// 剩下的 import ...
-
 export default function LandingPage() {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center font-sans text-slate-400">載入中...</div>}>
@@ -18,18 +16,18 @@ export default function LandingPage() {
 function LandingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // --- 從這裡開始貼上 ---
+
+  // 1. 自動偵測：檢查網址參數並預存邀請碼
   useEffect(() => {
     const autoLogin = async () => {
       const code = searchParams.get('code');
       if (code) {
-        localStorage.setItem('nbm_invitation_code', code);
+        // 統一變數名稱為 nbm_invite_code
+        localStorage.setItem('nbm_invite_code', code);
         try {
           await liff.init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! });
           if (liff.isLoggedIn()) {
-            router.push('/categories');
-          } else {
-            liff.login();
+            router.replace('/categories');
           }
         } catch (err) {
           console.error("Auto init failed", err);
@@ -38,30 +36,28 @@ function LandingContent() {
     };
     autoLogin();
   }, [searchParams, router]);
-  // --- 貼到這裡結束 ---
+
+  // 2. 手動登入：按鈕點擊邏輯
   const handleLineLogin = async () => {
     try {
-      // 請確保 NEXT_PUBLIC_LIFF_ID 已在 Cloudflare 環境變數中設定
       await liff.init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! });
 
       if (!liff.isLoggedIn()) {
         liff.login();
       } else {
-        const code = searchParams.get('code');
+        // 同時檢查網址或本地儲存
+        const code = searchParams.get('code') || localStorage.getItem('nbm_invite_code');
+
         if (code) {
           localStorage.setItem('nbm_invite_code', code);
-          router.push('/categories');
+          router.replace('/categories');
         } else {
-          const savedCode = localStorage.getItem('nbm_invite_code');
-          if (savedCode) {
-            router.push('/categories');
-          } else {
-            alert('請掃描專屬邀請碼 QR Code 進入平台');
-          }
+          alert('請掃描專屬邀請碼 QR Code 進入平台');
         }
       }
     } catch (err) {
       console.error("LIFF 錯誤", err);
+      alert("LINE 初始化失敗，請重新整理頁面");
     }
   };
 
@@ -81,10 +77,9 @@ function LandingContent() {
 
         {/* 2. LINE Login Button */}
         <div className="w-full max-w-[320px] mt-10">
-          {/* 找到這段程式碼，並確保第一行有加上 onClick */}
           <button
             onClick={handleLineLogin}
-            className="flex items-center gap-2 bg-[#437A7A] text-white px-12 py-4 rounded-3xl font-bold shadow-lg active:scale-95 transition-all"
+            className="flex items-center gap-2 bg-[#437A7A] text-white px-12 py-4 rounded-3xl font-bold shadow-lg active:scale-95 transition-all mx-auto"
           >
             <span className="text-xl">🗨️</span> 使用 LINE 登入
           </button>
@@ -96,7 +91,6 @@ function LandingContent() {
 
       {/* 3. Feature Cards */}
       <section className="px-6 space-y-6 mt-6">
-        {/* Card 1: 科學驗證 */}
         <div className="bg-[#F3F4F1] rounded-[2.5rem] p-8 border border-white/50 shadow-sm">
           <div className="flex items-center gap-2 text-[#004D4D] mb-4">
             <span className="text-lg">🧪</span>
@@ -116,7 +110,6 @@ function LandingContent() {
           </div>
         </div>
 
-        {/* Card 2: 生技醫藥新知 */}
         <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
           <div className="flex items-center gap-2 text-[#475569] mb-4">
             <span className="text-lg">📄</span>
