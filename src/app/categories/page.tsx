@@ -1,13 +1,47 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import liff from '@line/liff';
 
 export default function CategoriesPage() {
   const [question, setQuestion] = useState('');
+  const [profile, setProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  // 1. 衛教專題分類資料：完全同步 image_39fc73, image_3a0073, image_3a0797
+  // 1. LIFF 初始化與權限檢查
+  useEffect(() => {
+    const initLiff = async () => {
+      try {
+        const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
+        if (!liffId) {
+          console.error("LIFF ID is missing in environment variables");
+          setLoading(false);
+          return;
+        }
+
+        await liff.init({ liffId });
+
+        if (!liff.isLoggedIn()) {
+          // 如果沒登入，自動踢回首頁進行登入
+          router.replace('/');
+        } else {
+          const userProfile = await liff.getProfile();
+          setProfile(userProfile);
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error('LIFF Initialization failed', err);
+        setLoading(false);
+      }
+    };
+    initLiff();
+  }, [router]);
+
+  // 2. 衛教專題分類資料
   const mainTopics = [
     {
       id: 'brain-nerve',
@@ -49,25 +83,47 @@ export default function CategoriesPage() {
     },
   ];
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FDFBF9]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#007F80]"></div>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#FDFBF9] text-[#1E293B] font-sans pb-16">
 
-      {/* 2. 頂端導覽列：完全同步 image_39a1e2 */}
-      <nav className="px-6 py-4 flex items-center justify-between bg-white/40 backdrop-blur-md sticky top-0 z-50">
+      {/* 頂端導覽列：動態讀取 LINE 頭像 */}
+      <nav className="px-6 py-4 flex items-center justify-between bg-white/40 backdrop-blur-md sticky top-0 z-50 border-b border-white/20">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-100 shadow-sm">
-            {/* LIFF 頭像位置 */}
+          <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-100 shadow-sm relative">
+            {profile?.pictureUrl ? (
+              <Image
+                src={profile.pictureUrl}
+                alt={profile.displayName || 'User'}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-slate-300" />
+            )}
           </div>
-          <span className="text-sm font-bold text-[#2D3748]">彥臣專業衛教平台</span>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Professional</span>
+            <span className="text-sm font-bold text-[#2D3748]">
+              {profile ? `${profile.displayName} 醫師/專家` : '彥臣衛教平台'}
+            </span>
+          </div>
         </div>
-        <button className="text-xl text-slate-400">🔔</button>
+        <button className="text-xl text-slate-400 hover:text-[#007F80] transition-colors">🔔</button>
       </nav>
 
-      {/* 3. 黃博士專欄：完全同步 image_39a1e2 */}
+      {/* 黃博士專欄 */}
       <section className="px-5 py-4">
         <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
           <div className="text-center mb-6">
-            <p className="text-[#A1816B] text-[10px] font-black uppercase tracking-[0.2em] mb-2">EXPERT INSIGHT</p>
+            <p className="text-[#A1816B] text-[10px] font-black uppercase tracking-[0.2em] mb-2">Expert Insight</p>
             <h1 className="text-3xl font-black text-[#007F80]">黃博士專欄</h1>
             <p className="text-xs text-slate-500 mt-4 leading-relaxed max-w-[260px] mx-auto font-medium">
               專業生技醫藥深度解析，為您揭開現代醫學與草本科學的整合奧秘。
@@ -76,14 +132,15 @@ export default function CategoriesPage() {
               立即閱讀 →
             </Link>
           </div>
-          <div className="rounded-[2rem] overflow-hidden aspect-square bg-black flex items-center justify-center">
-            {/* 此處放置石柱主視覺 */}
-            <div className="text-white/20 text-[10px] tracking-widest">PILLAR VISUAL</div>
+          <div className="rounded-[2rem] overflow-hidden aspect-square bg-slate-900 flex items-center justify-center relative group">
+            {/* 此處之後可放入指定的石柱主視覺圖片 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-transparent z-10" />
+            <div className="text-white/20 text-[10px] tracking-widest z-20 group-hover:text-white/40 transition-colors">PILLAR VISUAL</div>
           </div>
         </div>
       </section>
 
-      {/* 4. 衛教專題分類區塊：完全同步 image_39fc73 */}
+      {/* 衛教專題分類區塊 */}
       <section className="px-5 py-6 space-y-5">
         <div className="flex flex-col mb-6 px-2">
           <h2 className="text-xl font-black text-slate-800">衛教專題分類</h2>
@@ -117,7 +174,7 @@ export default function CategoriesPage() {
         ))}
       </section>
 
-      {/* 5. 專家問答區塊：完全同步 image_3a0bd7 */}
+      {/* 專家問答區塊 */}
       <section className="px-5 py-8 mt-4">
         <div className="bg-[#F3F4F1] rounded-[3rem] p-10 flex flex-col items-center text-center border border-white shadow-sm">
           <div className="w-14 h-14 rounded-2xl bg-[#007F80] flex items-center justify-center shadow-lg mb-6">
@@ -125,7 +182,7 @@ export default function CategoriesPage() {
           </div>
           <h3 className="text-2xl font-black text-[#007F80] mb-4">專家問答</h3>
           <p className="text-[12px] text-slate-600 leading-relaxed mb-10 max-w-[280px] font-medium">
-            對衛教內容有疑問？或是想了解特定的生技醫藥知識？請在此留下您的問題，我們的醫療專家團隊將為您提供專業解答。
+            對衛教內容有疑問？請在此留下您的問題，我們的醫療專家團隊將為您提供專業解答。
           </p>
 
           <div className="w-full space-y-5">
@@ -145,7 +202,7 @@ export default function CategoriesPage() {
       {/* Footer */}
       <footer className="px-8 py-12 text-center">
         <p className="text-[10px] text-slate-400 font-medium leading-loose">
-          © 2026 彥臣生技藥品股份有限公司 專利所有 <br /> 專供生技醫藥新知參考。不涉及醫療建議。資訊與數據僅供參考。
+          © 2026 彥臣生技藥品股份有限公司 專利所有 <br /> 專供生技醫藥新知參考。不涉及醫療建議。
         </p>
       </footer>
     </main>
