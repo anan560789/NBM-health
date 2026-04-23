@@ -40,7 +40,7 @@ function LandingContent() {
   // 2. 手動登入：按鈕點擊邏輯
   const handleLineLogin = async () => {
     try {
-      await liff.init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! });
+      await liff.init({ liffId: "2009691062-IZVshmjD" });
 
       if (!liff.isLoggedIn()) {
         liff.login();
