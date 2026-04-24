@@ -40,15 +40,7 @@ function LandingContent() {
   // 2. 手動登入：按鈕點擊邏輯
   const handleLineLogin = async () => {
     try {
-      liff.init({ liffId: "2009691062-IZVshmjD" })
-        .then(() => {
-          console.log("LIFF 啟動成功");
-          if (!liff.isLoggedIn()) liff.login();
-        })
-        .catch((err) => {
-          // 請回報這裡彈出的錯誤訊息是什麼？
-          alert("詳細報錯：" + err.message + " | 代碼：" + err.code);
-        });
+      await liff.init({ liffId: "2009691062-IZVshmjD" });
 
       if (!liff.isLoggedIn()) {
         liff.login();
