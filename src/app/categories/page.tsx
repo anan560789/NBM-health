@@ -12,21 +12,15 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // 1. LIFF 初始化與權限檢查
+  // 1. LIFF 初始化與權限檢查 (硬寫 ID 版確保穩定)
   useEffect(() => {
     const initLiff = async () => {
       try {
-        const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
-        if (!liffId) {
-          console.error("LIFF ID is missing in environment variables");
-          setLoading(false);
-          return;
-        }
+        const liffId = "2009691062-IZVshmjD"; // 保持硬寫 ID 排除環境變數干擾
 
         await liff.init({ liffId });
 
         if (!liff.isLoggedIn()) {
-          // 如果沒登入，自動踢回首頁進行登入
           router.replace('/');
         } else {
           const userProfile = await liff.getProfile();
@@ -41,24 +35,24 @@ export default function CategoriesPage() {
     initLiff();
   }, [router]);
 
-  // 2. 衛教專題分類資料
+  // 2. 衛教專題分類資料 (整合產品與研究項目)
   const mainTopics = [
     {
       id: 'brain-nerve',
       name: '大腦與神經系統',
-      desc: '病理機轉、用藥與慧祐全',
+      desc: '病理機轉、用藥與慧祐全 (PPLs) 研究',
       image: '/images/topics/brain.jpg',
       barnHealth: 'BARN HEALTH'
     },
     {
       id: 'eyes',
-      name: '眼睛',
+      name: '視力與黃斑部護理',
       desc: '各項眼疾病理、保健與視祐全運用',
       image: '/images/topics/eye.jpg'
     },
     {
       id: 'immunity',
-      name: '免疫力',
+      name: '免疫力調節',
       desc: '深入研究免疫反應與康祐全運用',
       image: '/images/topics/immunity.jpg',
       textOverlay: 'IMMUNITY'
@@ -71,14 +65,14 @@ export default function CategoriesPage() {
     },
     {
       id: 'diabetes',
-      name: '糖尿病',
+      name: '糖尿病專題',
       desc: '控制血糖、胰島健康與糖祐全運用',
       image: '/images/topics/diabetes.jpg'
     },
     {
       id: 'cardiovascular',
       name: '心血管系統',
-      desc: '心臟血管系統保健與脂祐全、清祐全的運用',
+      desc: '心臟血管系統保健與脂祐全、清祐全運用',
       image: '/images/topics/cardio.jpg'
     },
   ];
@@ -97,45 +91,49 @@ export default function CategoriesPage() {
       {/* 頂端導覽列：動態讀取 LINE 頭像 */}
       <nav className="px-6 py-4 flex items-center justify-between bg-white/40 backdrop-blur-md sticky top-0 z-50 border-b border-white/20">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-100 shadow-sm relative">
+          <div className="w-9 h-9 rounded-full bg-slate-200 overflow-hidden border-2 border-white shadow-sm relative">
             {profile?.pictureUrl ? (
               <Image
                 src={profile.pictureUrl}
                 alt={profile.displayName || 'User'}
                 fill
                 className="object-cover"
+                unoptimized
               />
             ) : (
               <div className="w-full h-full bg-slate-300" />
             )}
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Professional</span>
-            <span className="text-sm font-bold text-[#2D3748]">
+            <span className="text-[9px] font-black text-teal-600 uppercase tracking-widest">Medical Pro</span>
+            <span className="text-sm font-black text-[#2D3748]">
               {profile ? `${profile.displayName} 醫師/專家` : '彥臣衛教平台'}
             </span>
           </div>
         </div>
-        <button className="text-xl text-slate-400 hover:text-[#007F80] transition-colors">🔔</button>
+        <button className="w-9 h-9 flex items-center justify-center bg-white rounded-full shadow-sm text-slate-400">🔔</button>
       </nav>
 
-      {/* 黃博士專欄 */}
+      {/* 黃博士專欄 (Pillar Visual) */}
       <section className="px-5 py-4">
-        <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
-          <div className="text-center mb-6">
+        <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100 relative overflow-hidden">
+          <div className="relative z-10">
             <p className="text-[#A1816B] text-[10px] font-black uppercase tracking-[0.2em] mb-2">Expert Insight</p>
             <h1 className="text-3xl font-black text-[#007F80]">黃博士專欄</h1>
-            <p className="text-xs text-slate-500 mt-4 leading-relaxed max-w-[260px] mx-auto font-medium">
+            <p className="text-xs text-slate-500 mt-4 leading-relaxed max-w-[240px] font-medium">
               專業生技醫藥深度解析，為您揭開現代醫學與草本科學的整合奧秘。
             </p>
             <Link href="/categories/dr-huang" className="inline-flex items-center gap-2 mt-8 bg-[#007F80] text-white px-10 py-3.5 rounded-full text-xs font-bold shadow-lg shadow-teal-900/10 active:scale-95 transition-all">
               立即閱讀 →
             </Link>
           </div>
-          <div className="rounded-[2rem] overflow-hidden aspect-square bg-slate-900 flex items-center justify-center relative group">
+
+          <div className="mt-8 rounded-[2rem] overflow-hidden aspect-square bg-slate-900 relative group">
             {/* 此處之後可放入指定的石柱主視覺圖片 */}
             <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-transparent z-10" />
-            <div className="text-white/20 text-[10px] tracking-widest z-20 group-hover:text-white/40 transition-colors">PILLAR VISUAL</div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-white/20 text-[10px] tracking-widest uppercase">Pillar Visual Image</span>
+            </div>
           </div>
         </div>
       </section>
@@ -143,30 +141,34 @@ export default function CategoriesPage() {
       {/* 衛教專題分類區塊 */}
       <section className="px-5 py-6 space-y-5">
         <div className="flex flex-col mb-6 px-2">
-          <h2 className="text-xl font-black text-slate-800">衛教專題分類</h2>
-          <span className="text-xs text-slate-400 font-bold mt-1">深入探索各項健康領域</span>
+          <h2 className="text-xl font-black text-slate-800 tracking-tight">衛教專題分類</h2>
+          <span className="text-xs text-slate-400 font-bold mt-1 tracking-wide">深入探索各項健康領域 Research Papers</span>
         </div>
 
         {mainTopics.map((topic) => (
           <Link key={topic.id} href={`/categories/${topic.id}`} className="block group">
             <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100 transition-all active:scale-[0.98]">
-              <div className="aspect-[16/10] relative bg-slate-900 flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
+              <div className="aspect-[16/9] relative bg-slate-900 flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
 
                 {/* 裝飾性文字疊加 */}
                 {topic.textOverlay && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white/10 text-6xl font-black tracking-widest uppercase">{topic.textOverlay}</span>
+                    <span className="text-white/5 text-6xl font-black tracking-[0.2em] uppercase">{topic.textOverlay}</span>
                   </div>
                 )}
                 {topic.barnHealth && (
-                  <div className="absolute bottom-6 right-8 text-white/20 text-xl font-bold tracking-tight z-20">{topic.barnHealth}</div>
+                  <div className="absolute bottom-6 right-8 text-white/20 text-lg font-black tracking-tighter z-20 italic">
+                    {topic.barnHealth}
+                  </div>
                 )}
 
                 {/* 卡片文案 */}
                 <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
                   <h3 className="text-2xl font-black text-white mb-2">{topic.name}</h3>
-                  <p className="text-[11px] text-white/70 font-medium tracking-wide">{topic.desc}</p>
+                  <p className="text-[11px] text-white/70 font-medium tracking-wide max-w-[220px]">
+                    {topic.desc}
+                  </p>
                 </div>
               </div>
             </div>
@@ -189,11 +191,11 @@ export default function CategoriesPage() {
             <textarea
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder="請輸入您的問題..."
-              className="w-full bg-white border-none rounded-[1.5rem] p-6 text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none min-h-[160px] shadow-inner resize-none"
+              placeholder="請輸入您的問題或臨床觀察..."
+              className="w-full bg-white border-none rounded-[1.5rem] p-6 text-sm text-slate-800 placeholder:text-slate-300 focus:ring-2 focus:ring-teal-500/20 min-h-[160px] shadow-inner resize-none transition-all"
             />
             <button className="w-full bg-[#007F80] hover:bg-[#006666] text-white py-4.5 rounded-full text-xs font-black flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-teal-900/20">
-              提交問題 ➤
+              提交專業諮詢 ➤
             </button>
           </div>
         </div>
@@ -201,8 +203,10 @@ export default function CategoriesPage() {
 
       {/* Footer */}
       <footer className="px-8 py-12 text-center">
-        <p className="text-[10px] text-slate-400 font-medium leading-loose">
-          © 2026 彥臣生技藥品股份有限公司 專利所有 <br /> 專供生技醫藥新知參考。不涉及醫療建議。
+        <div className="w-10 h-1 bg-slate-200 mx-auto mb-8 rounded-full" />
+        <p className="text-[10px] text-slate-400 font-bold leading-loose uppercase tracking-widest">
+          © 2026 彥臣生技藥品股份有限公司 <br />
+          NatureWise Biotech & Medicals- Professional Medical Resources
         </p>
       </footer>
     </main>
