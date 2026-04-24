@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import liff from '@line/liff';
+import { supabase } from '@/lib/supabase'; // 引入剛才建立的工具
 
 export default function CategoriesPage() {
   const [question, setQuestion] = useState('');
@@ -12,12 +13,10 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // 1. LIFF 初始化與權限檢查 (硬寫 ID 版確保穩定)
   useEffect(() => {
     const initLiff = async () => {
       try {
-        const liffId = "2009691062-IZVshmjD"; // 保持硬寫 ID 排除環境變數干擾
-
+        const liffId = "2009691062-IZVshmjD";
         await liff.init({ liffId });
 
         if (!liff.isLoggedIn()) {
@@ -25,6 +24,21 @@ export default function CategoriesPage() {
         } else {
           const userProfile = await liff.getProfile();
           setProfile(userProfile);
+
+          // --- 自動同步資料到 Supabase ---
+          const inviteCode = localStorage.getItem('nbm_invite_code') || 'PRO';
+
+          await supabase
+            .from('users_log')
+            .upsert({
+              line_id: userProfile.userId,
+              display_name: userProfile.displayName,
+              picture_url: userProfile.pictureUrl,
+              invitation_code: inviteCode,
+              last_login: new Date().toISOString()
+            }, { onConflict: 'line_id' });
+          // ----------------------------
+
           setLoading(false);
         }
       } catch (err) {
@@ -34,6 +48,7 @@ export default function CategoriesPage() {
     };
     initLiff();
   }, [router]);
+
 
   // 2. 衛教專題分類資料 (整合產品與研究項目)
   const mainTopics = [
