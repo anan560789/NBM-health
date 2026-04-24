@@ -161,6 +161,18 @@ export default function CategoriesPage() {
               <div className="aspect-[16/9] relative bg-slate-900 flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
 
+                {/* --- 從 164 行開始替換 --- */}
+                {/* 新增：背景圖片元件 */}
+                <Image
+                  src={topic.image}
+                  alt={topic.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-70"
+                  unoptimized
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
+
                 {/* 裝飾性文字疊加 */}
                 {topic.textOverlay && (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -180,8 +192,8 @@ export default function CategoriesPage() {
                     {topic.desc}
                   </p>
                 </div>
-              </div>
-            </div>
+              </div> {/* 這是對應原本 183 行的 div */}
+            </div> {/* 這是對應原本 184 行的 div */}
           </Link>
         ))}
       </section>
