@@ -107,7 +107,7 @@ export default function CategoriesPage() {
           <div className="flex flex-col">
             <span className="text-[9px] font-black text-teal-600 uppercase tracking-widest">Medical Pro</span>
             <span className="text-sm font-black text-[#2D3748]">
-              {profile ? `${profile.displayName} 醫師/專家` : '彥臣衛教平台'}
+              {profile ? `${profile.displayName} 藥師/專家` : '彥臣衛教平台'}
             </span>
           </div>
         </div>
