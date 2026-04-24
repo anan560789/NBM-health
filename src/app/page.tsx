@@ -40,22 +40,13 @@ function LandingContent() {
   // 2. 手動登入：按鈕點擊邏輯
   const handleLineLogin = async () => {
     try {
-      liff.init({ liffId: "2009691062-IZVshmjD" })
-        .then(() => {
-          console.log("LIFF 啟動成功");
-          if (!liff.isLoggedIn()) liff.login();
-        })
-        .catch((err) => {
-          // 請回報這裡彈出的錯誤訊息是什麼？
-          alert("詳細報錯：" + err.message + " | 代碼：" + err.code);
-        });
+      // 確保這裡是用硬寫的 ID，排除變數讀取問題
+      await liff.init({ liffId: "2009691062-IZVshmjD" });
 
       if (!liff.isLoggedIn()) {
         liff.login();
       } else {
-        // 同時檢查網址或本地儲存
         const code = searchParams.get('code') || localStorage.getItem('nbm_invite_code');
-
         if (code) {
           localStorage.setItem('nbm_invite_code', code);
           router.replace('/categories');
@@ -63,9 +54,10 @@ function LandingContent() {
           alert('請掃描專屬邀請碼 QR Code 進入平台');
         }
       }
-    } catch (err) {
+    } catch (err: any) {
+      // 這是最重要的診斷關鍵！請截圖告訴我這串內容是什麼
+      alert("LINE 初始化報錯詳情：\n" + err.message + "\n代碼: " + (err.code || '無'));
       console.error("LIFF 錯誤", err);
-      alert("LINE 初始化失敗，請重新整理頁面");
     }
   };
 
