@@ -41,7 +41,7 @@ export default function CategoriesPage() {
       id: 'brain-nerve',
       name: '大腦與神經系統',
       desc: '病理機轉、用藥與慧祐全 (PPLs) 研究',
-      image: '/images/topics/brain.jpg',
+      image: '/brain_category.jpg',
       barnHealth: 'BARN HEALTH'
     },
     {
@@ -128,15 +128,25 @@ export default function CategoriesPage() {
             </Link>
           </div>
 
-          <div className="mt-8 rounded-[2rem] overflow-hidden aspect-square bg-slate-900 relative group">
-            {/* 此處之後可放入指定的石柱主視覺圖片 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-transparent z-10" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-white/20 text-[10px] tracking-widest uppercase">Pillar Visual Image</span>
+          <div className="mt-8 rounded-[2rem] overflow-hidden aspect-square relative group shadow-inner border border-slate-100">
+            {/* 增加漸層讓文字讀取更清晰，並保留專業感 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-teal-900/30 via-transparent to-transparent z-10" />
+
+            <Image
+              src="/dr_huang.jpg"
+              alt="黃博士專欄主視覺"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              unoptimized
+            />
+
+            {/* 裝飾文字 */}
+            <div className="absolute bottom-6 left-8 z-20">
+              <span className="text-white/90 text-[10px] font-black tracking-[0.2em] uppercase">Expert Insights</span>
             </div>
           </div>
-        </div>
-      </section>
+        </div> {/* 這是對應第 119 行的 bg-white div */}
+      </section> {/* 這是對應第 118 行的 section */}
 
       {/* 衛教專題分類區塊 */}
       <section className="px-5 py-6 space-y-5">
@@ -209,6 +219,6 @@ export default function CategoriesPage() {
           NatureWise Biotech & Medicals- Professional Medical Resources
         </p>
       </footer>
-    </main>
+    </main >
   );
 }
