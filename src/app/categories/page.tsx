@@ -28,7 +28,7 @@ export default function CategoriesPage() {
           // --- 自動同步資料到 Supabase ---
           const inviteCode = localStorage.getItem('nbm_invite_code') || 'PRO';
 
-          await supabase
+          const { error: supabaseError } = await supabase
             .from('users_log')
             .upsert({
               line_id: userProfile.userId,
@@ -37,7 +37,15 @@ export default function CategoriesPage() {
               invitation_code: inviteCode,
               last_login: new Date().toISOString()
             }, { onConflict: 'line_id' });
-          // ----------------------------
+
+          if (supabaseError) {
+            console.error('Supabase Sync Error:', supabaseError);
+            alert("同步失敗：" + supabaseError.message);
+          } else {
+            console.log('Supabase Sync Success');
+            // 測試成功後可以把下面這行 alert 拿掉
+            alert("專業身分驗證成功，歡迎 " + userProfile.displayName);
+          }
 
           setLoading(false);
         }
