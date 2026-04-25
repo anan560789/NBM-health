@@ -71,32 +71,32 @@ export default function CategoriesPage() {
       id: 'eyes',
       name: '視力與黃斑部護理',
       desc: '各項眼疾病理、保健與視祐全運用',
-      image: '/images/topics/eye.jpg'
+      image: '/eye_category.jpg'
     },
     {
       id: 'immunity',
       name: '免疫力調節',
       desc: '深入研究免疫反應與康祐全運用',
-      image: '/images/topics/immunity.jpg',
+      image: '/immunity_category.jpg',
       textOverlay: 'IMMUNITY'
     },
     {
       id: 'inflammation-cancer',
       name: '慢性發炎與癌症',
       desc: '慢性疾病、癌症與 Propolins 的研究',
-      image: '/images/topics/cancer.jpg'
+      image: '/cancer_category.jpg'
     },
     {
       id: 'diabetes',
       name: '糖尿病專題',
       desc: '控制血糖、胰島健康與糖祐全運用',
-      image: '/images/topics/diabetes.jpg'
+      image: '/diabetes_category.jpg'
     },
     {
       id: 'cardiovascular',
       name: '心血管系統',
       desc: '心臟血管系統保健與脂祐全、清祐全運用',
-      image: '/images/topics/cardio.jpg'
+      image: '/cardiovascular_category.jpg'
     },
   ];
 

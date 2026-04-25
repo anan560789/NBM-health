@@ -1,8 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-// 使用預設值確保 Build 階段不會報錯
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
+// 直接把你在 Supabase 看到的資訊貼在這裡
+const supabaseUrl = 'https://xzlkgavbuucmbqryvirr.supabase.co'; // 這是從你截圖網址看到的
+const supabaseAnonKey = 'sb_publishable_zeiBo0Elc0-dFaQ_d1RoKw_VGXjU0W2'; // 這是從你 Cloudflare 截圖看到的
 
-// 只有在變數正確時才啟動真正的客戶端
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
