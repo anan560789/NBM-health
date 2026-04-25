@@ -1,11 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
-// 這會自動讀取你在 .env.local 或 Cloudflare 設定的環境變數
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// 使用預設值確保 Build 階段不會報錯
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn("Supabase 變數缺失，請檢查環境變數設定。");
-}
-
+// 只有在變數正確時才啟動真正的客戶端
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
