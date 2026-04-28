@@ -30,18 +30,20 @@ export default function CategoriesPage() {
 
           const { error: supabaseError } = await supabase
             .from('users_log')
-            .upsert({
-              line_id: userProfile.userId,
-              display_name: userProfile.displayName,
-              picture_url: userProfile.pictureUrl,
-              invitation_code: inviteCode,
-              last_login: new Date().toISOString()
-            }, { onConflict: 'line_id' });
+            .insert([
+              {
+                line_id: userProfile.userId,
+                display_name: userProfile.displayName,
+                picture_url: userProfile.pictureUrl,
+                invitation_code: inviteCode,
+                last_login: new Date().toISOString()
+              }
+            ]);
 
-          if (supabaseError) {
-            console.error('Supabase Sync Error:', supabaseError);
+          if (supabaseError && supabaseError.code !== '23505') {
+            console.error('Supabase Sync Error:', supabaseError.message);
           } else {
-            console.log('✅ 專業身分紀錄同步成功');
+            console.log('✅ 專業身分紀錄同步成功 (或已存在)');
           }
 
           setLoading(false);
