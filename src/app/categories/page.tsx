@@ -25,25 +25,25 @@ export default function CategoriesPage() {
           const userProfile = await liff.getProfile();
           setProfile(userProfile);
 
-          // 自動同步資料到 Supabase (安靜模式)
+          // 1. 取得邀請碼，預設為 PRO
           const inviteCode = localStorage.getItem('nbm_invite_code') || 'PRO';
 
+          // 2. 回歸標準 upsert 同步邏輯 (靜音模式)
           const { error: supabaseError } = await supabase
             .from('users_log')
-            .insert([
-              {
-                line_id: userProfile.userId,
-                display_name: userProfile.displayName,
-                picture_url: userProfile.pictureUrl,
-                invitation_code: inviteCode,
-                last_login: new Date().toISOString()
-              }
-            ]);
+            .upsert({
+              line_id: userProfile.userId,
+              display_name: userProfile.displayName,
+              picture_url: userProfile.pictureUrl,
+              invitation_code: inviteCode,
+              last_login: new Date().toISOString()
+            }, { onConflict: 'line_id' });
 
-          if (supabaseError && supabaseError.code !== '23505') {
+          if (supabaseError) {
+            // 僅在開發者工具紀錄，不跳窗干擾藥師
             console.error('Supabase Sync Error:', supabaseError.message);
           } else {
-            console.log('✅ 專業身分紀錄同步成功 (或已存在)');
+            console.log('✅ 專業身分紀錄同步成功');
           }
 
           setLoading(false);
@@ -56,6 +56,7 @@ export default function CategoriesPage() {
     initLiff();
   }, [router]);
 
+  // 衛教專題分類資料
   const mainTopics = [
     {
       id: 'brain-nerve',
@@ -107,6 +108,7 @@ export default function CategoriesPage() {
 
   return (
     <main className="min-h-screen bg-[#FDFBF9] text-[#1E293B] font-sans pb-16">
+      {/* 頂端導覽列 */}
       <nav className="px-6 py-4 flex items-center justify-between bg-white/40 backdrop-blur-md sticky top-0 z-50 border-b border-white/20">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-full bg-slate-200 overflow-hidden border-2 border-white shadow-sm relative">
@@ -132,6 +134,7 @@ export default function CategoriesPage() {
         <button className="w-9 h-9 flex items-center justify-center bg-white rounded-full shadow-sm text-slate-400">🔔</button>
       </nav>
 
+      {/* 黃博士專欄 */}
       <section className="px-5 py-4">
         <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100 relative overflow-hidden">
           <div className="relative z-10">
@@ -160,6 +163,7 @@ export default function CategoriesPage() {
         </div>
       </section>
 
+      {/* 衛教專題分類區塊 */}
       <section className="px-5 py-6 space-y-5">
         <div className="flex flex-col mb-6 px-2">
           <h2 className="text-xl font-black text-slate-800 tracking-tight">衛教專題分類</h2>
@@ -200,6 +204,7 @@ export default function CategoriesPage() {
         ))}
       </section>
 
+      {/* 專家問答區塊 */}
       <section className="px-5 py-8 mt-4">
         <div className="bg-[#F3F4F1] rounded-[3rem] p-10 flex flex-col items-center text-center border border-white shadow-sm">
           <div className="w-14 h-14 rounded-2xl bg-[#007F80] flex items-center justify-center shadow-lg mb-6">
