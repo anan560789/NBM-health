@@ -38,14 +38,17 @@ export default function CategoriesPage() {
               last_login: new Date().toISOString()
             }, { onConflict: 'line_id' });
 
+          // --- 從第 41 行開始修改 ---
           if (supabaseError) {
             console.error('Supabase Sync Error:', supabaseError);
-            alert("同步失敗：" + supabaseError.message);
+            // 刪除或註解掉下面這行 alert
+            // alert("同步失敗：" + supabaseError.message); 
           } else {
             console.log('Supabase Sync Success');
-            // 測試成功後可以把下面這行 alert 拿掉
-            alert("專業身分驗證成功，歡迎 " + userProfile.displayName);
+            // 刪除或註解掉下面這行 alert
+            // alert("專業身分驗證成功，歡迎 " + userProfile.displayName);
           }
+          // --- 修改到原本第 48 行 ---
 
           setLoading(false);
         }
