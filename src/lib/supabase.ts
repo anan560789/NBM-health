@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-// 使用新版的 Publishable Key 與正確的 URL
+// 直接寫死，不留任何懸念
 const supabaseUrl = 'https://xzlkgavbuucmbqryvirr.supabase.co';
 const supabaseAnonKey = 'sb_publishable_zeiBo0Elc0-dFaQ_d1RoKw_VGXjU0W2';
 
