@@ -21,23 +21,24 @@ export default function DrHuangColumnPage() {
     setIsSubmitting(true);
 
     try {
-      // 加上這行 debug，看看手機端到底有沒有抓到變數
-      console.log('Target URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-
       const { error } = await supabase
         .from('subscribers')
         .insert([{ email: email.trim().toLowerCase() }]);
 
       if (error) {
-        // 詳細提示，讓我們知道是哪種失敗
-        alert(`訂閱細節：[${error.code}] ${error.message}`);
+        // 優化錯誤訊息：針對重複訂閱進行友善提示
+        if (error.code === '23505') {
+          alert('此 Email 已經訂閱過囉！感謝您的支持。');
+        } else {
+          alert(`訂閱失敗：[${error.code}] ${error.message}`);
+        }
       } else {
         alert('恭喜！黃博士專欄訂閱成功。');
         setEmail('');
       }
     } catch (err: any) {
-      // 攔截網路連線錯誤
-      alert('系統連線中斷：' + err.toString());
+      // 攔截網路連線或其他意外錯誤
+      alert('系統連線中斷：' + (err.message || err.toString()));
     } finally {
       setIsSubmitting(false);
     }
