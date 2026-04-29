@@ -15,24 +15,29 @@ export default function DrHuangColumnPage() {
     subscribeRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // 2. 處理 Email 訂閱邏輯
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      // 加上這行 debug，看看手機端到底有沒有抓到變數
+      console.log('Target URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+
       const { error } = await supabase
         .from('subscribers')
         .insert([{ email: email.trim().toLowerCase() }]);
 
       if (error) {
-        alert(`訂閱失敗：${error.message}`);
+        // 詳細提示，讓我們知道是哪種失敗
+        alert(`訂閱細節：[${error.code}] ${error.message}`);
       } else {
-        alert('感謝訂閱！');
+        alert('恭喜！黃博士專欄訂閱成功。');
         setEmail('');
       }
     } catch (err: any) {
-      // 如果這裡噴錯，代表變數還是空值或網路不通
-      alert('連線失敗，請檢查網路或稍後再試。');
+      // 攔截網路連線錯誤
+      alert('系統連線中斷：' + err.toString());
     } finally {
       setIsSubmitting(false);
     }
@@ -72,7 +77,6 @@ export default function DrHuangColumnPage() {
               </Link>
             </div>
           </div>
-          {/* 背景裝飾 */}
           <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-teal-400/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-[-10%] left-[-5%] w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
         </div>
@@ -85,7 +89,6 @@ export default function DrHuangColumnPage() {
           <span className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Deep Dive Articles</span>
         </div>
 
-        {/* 文章卡片 1 */}
         <Link href="/categories/dr-huang/article-1" className="block group">
           <div className="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm transition-all group-active:scale-[0.98] group-hover:border-teal-100">
             <div className="flex items-start gap-5">
@@ -111,7 +114,6 @@ export default function DrHuangColumnPage() {
           </div>
         </Link>
 
-        {/* 文章卡片 2 */}
         <Link href="/categories/dr-huang/article-2" className="block group">
           <div className="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm transition-all group-active:scale-[0.98] group-hover:border-teal-100">
             <div className="flex items-start gap-5">
@@ -173,12 +175,10 @@ export default function DrHuangColumnPage() {
               Privacy Guaranteed • Expert Updates Only
             </p>
           </div>
-          {/* 背景裝飾 */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/30 rounded-full -mr-16 -mt-16 blur-2xl"></div>
         </div>
       </section>
 
-      {/* 頁尾 */}
       <footer className="px-8 text-center mt-4">
         <div className="w-8 h-1 bg-slate-200 mx-auto mb-6 rounded-full"></div>
         <p className="text-[10px] text-slate-300 font-bold uppercase tracking-[0.2em] leading-relaxed">
