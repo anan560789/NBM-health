@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
-// 我們直接把值寫死在這裡測試（這是最保險的診斷方式）
-const supabaseUrl = 'https://xzlxgavbuucmbqryvirr.supabase.co';
-const supabaseAnonKey = 'sb_publishable_zeiBo0Elc0-dFaQ_d1RoKw_VGXjU0W2';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// 只有在環境變數存在時才初始化正確的客戶端
+// 如果在 Build 階段變數為空，則提供佔位符以防止崩潰
+export const supabase = createClient(
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseAnonKey || 'placeholder'
+);
