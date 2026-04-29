@@ -21,7 +21,7 @@ export default function DrHuangColumnPage() {
 
     // 安全檢查：確保 supabase 物件存在
     if (!supabase) {
-      alert('系統配置錯誤：找不到資料庫連線設定，請檢查環境變數。');
+      alert('系統尚未準備就緒（環境變數缺失），請稍後再試。');
       return;
     }
 
