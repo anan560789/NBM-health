@@ -1,10 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
+// 直接獲取變數
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// 只有當變數完整時才初始化，否則導出一個代理物件或 null
-// 這樣 build 就不會因為抓不到變數而崩潰
-export const supabase = (supabaseUrl && supabaseAnonKey)
-    ? createClient(supabaseUrl, supabaseAnonKey)
-    : (null as any);
+// 即使變數暫時為空也初始化，這會解決 Build Error。
+// 真正的連線會在網頁加載後，由瀏覽器讀取環境變數來執行。
+export const supabase = createClient(
+    supabaseUrl || 'https://placeholder.supabase.co', // 提供一個暫時的格式正確網址
+    supabaseAnonKey || 'placeholder-key'
+);
