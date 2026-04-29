@@ -18,6 +18,13 @@ export default function DrHuangColumnPage() {
   // 2. 處理 Email 訂閱邏輯
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 安全檢查：確保 supabase 物件存在
+    if (!supabase) {
+      alert('系統配置錯誤：找不到資料庫連線設定，請檢查環境變數。');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -26,18 +33,21 @@ export default function DrHuangColumnPage() {
         .insert([{ email: email.trim().toLowerCase() }]);
 
       if (error) {
+        // 23505 是 Postgres 的唯一約束衝突代碼（代表 Email 已存在）
         if (error.code === '23505') {
           alert('此 Email 已經訂閱過囉！感謝您的支持。');
         } else {
-          alert('訂閱時發生錯誤：' + error.message);
+          // 如果表格不存在，會跳出具體的錯誤訊息
+          alert(`訂閱失敗 (${error.code})：${error.message}`);
         }
       } else {
         alert('感謝訂閱！未來黃博士的新文章將第一時間通知您。');
         setEmail('');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Subscribe error:', err);
-      alert('網路連線異常，請稍後再試。');
+      // 如果 err.message 是 "Failed to fetch"，通常是網路路徑或 DNS 問題
+      alert('網路連線異常，請稍後再試。原因：' + (err.message || '未知錯誤'));
     } finally {
       setIsSubmitting(false);
     }
@@ -77,7 +87,7 @@ export default function DrHuangColumnPage() {
               </Link>
             </div>
           </div>
-          {/* 背景裝飾球 */}
+          {/* 背景裝飾 */}
           <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-teal-400/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-[-10%] left-[-5%] w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
         </div>
@@ -178,7 +188,7 @@ export default function DrHuangColumnPage() {
               Privacy Guaranteed • Expert Updates Only
             </p>
           </div>
-          {/* 背景裝飾紋理 */}
+          {/* 背景裝飾 */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/30 rounded-full -mr-16 -mt-16 blur-2xl"></div>
         </div>
       </section>
